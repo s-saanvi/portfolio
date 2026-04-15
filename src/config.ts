@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Gaurav G Alva",
   title: "Data Engineer | Analyst | Web Dev",
   description: "Portfolio website of Gaurav G Alva",
-  accentColor: "#fb8500   ",//"#DD6B20",//"#1d4ed8",
+  accentColor: "#fb8500",
   social: {
     email: "gauravalva.work@gmail.com",
     linkedin: "https://linkedin.com/in/gaurav-alva",
@@ -130,7 +130,6 @@ export const siteConfig = {
       name: "NoteSwap - Buy and Sell Notes Online",
       description:
         "A collaborative web platform enabling students to seamlessly share, upload, and access academic notes and resources categorized by subjects, topics, or courses.",
-        //link: "https://fullstackextensions.com/?ref=devportfolio",
       skills: ["Python", "Django", "Bootstrap", "Google Cloud", "Google APIs"],
     },
   ],
