@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from "../config";
+const base = import.meta.env.BASE_URL;
 ---
 
 <footer class="mt-24 border-t-4 border-black bg-white py-12">
@@ -12,10 +13,10 @@ import { siteConfig } from "../config";
     <div class="neo-box p-6 bg-white">
       <h3 class="text-xl font-bold uppercase mb-4">Quick Links</h3>
       <ul class="space-y-2 font-bold text-sm uppercase">
-        <li><a href="/about" class="hover:underline">About</a></li>
-        <li><a href="/services" class="hover:underline">Services</a></li>
-        <li><a href="/blog" class="hover:underline">Blog</a></li>
-        <li><a href="/contact" class="hover:underline">Contact</a></li>
+        <li><a href={`${base}/about`} class="hover:underline">About</a></li>
+        <li><a href={`${base}/services`} class="hover:underline">Services</a></li>
+        <li><a href={`${base}/blog`} class="hover:underline">Blog</a></li>
+        <li><a href={`${base}/contact`} class="hover:underline">Contact</a></li>
       </ul>
     </div>
 
