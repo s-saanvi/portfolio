@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../config";
+
+const socials = [
+  { name: "Twitter / X", url: siteConfig.social.twitter, color: "#000000" },
+  { name: "LinkedIn", url: siteConfig.social.linkedin, color: "#0A66C2" },
+  { name: "GitHub", url: siteConfig.social.github, color: "#181717" },
+  { name: "Google Dev", url: siteConfig.social.gdev, color: "#4285F4" }
+].filter(s => s.url);
+---
+
+<BaseLayout title="Socials">
+  <div class="py-12 md:py-24 max-w-4xl mx-auto text-center">
+    <h1 class="text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-16" style={`text-shadow: 4px 4px 0px ${siteConfig.accentColor};`}>
+      Connect With Us
+    </h1>
+
+    <div class="flex flex-col gap-6">
+      {socials.map((social) => (
+        <a
+          href={social.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="neo-box p-6 md:p-8 bg-white flex justify-between items-center group"
+        >
+          <span class="text-3xl md:text-5xl font-black uppercase tracking-tight group-hover:pl-4 transition-all duration-300">
+            {social.name}
+          </span>
+          <span class="text-4xl md:text-6xl font-black opacity-0 group-hover:opacity-100 transform translate-x-8 group-hover:translate-x-0 transition-all duration-300" style={`color: ${siteConfig.accentColor}`}>
+            &rarr;
+          </span>
+        </a>
+      ))}
+
+      <a
+          href={`mailto:${siteConfig.social.email}`}
+          class="neo-box p-6 md:p-8 flex justify-between items-center group text-white mt-8"
+          style={`background-color: ${siteConfig.accentColor}`}
+        >
+          <span class="text-3xl md:text-5xl font-black uppercase tracking-tight group-hover:pl-4 transition-all duration-300">
+            Email Us
+          </span>
+          <span class="text-4xl md:text-6xl font-black opacity-0 group-hover:opacity-100 transform translate-x-8 group-hover:translate-x-0 transition-all duration-300 text-black">
+            &rarr;
+          </span>
+        </a>
+    </div>
+  </div>
+</BaseLayout>
