@@ -1,5 +1,12 @@
 ---
 import { siteConfig } from "../config";
+
+const BOLD_REGEX = /\*\*(.*?)\*\*/g;
+const NEWLINE_REGEX = /\n/g;
+
+const formattedAboutMe = siteConfig.aboutMe
+  .replace(BOLD_REGEX, "<strong>$1</strong>")
+  .replace(NEWLINE_REGEX, "<br />");
 ---
 
 <section id="about" class="p-8 sm:p-12 md:p-16 lg:p-24">
@@ -19,8 +26,10 @@ import { siteConfig } from "../config";
       </div>
 
       <div class="lg:col-span-8 space-y-8">
-        <p class="text-lg sm:text-xl md:text-2xl leading-relaxed text-gray-600" set:html={siteConfig.aboutMe.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br />')}>
-        </p>
+        <p
+          class="text-lg sm:text-xl md:text-2xl leading-relaxed text-gray-600"
+          set:html={formattedAboutMe}
+        />
 
         <div class="pt-4">
           <div class="flex flex-wrap gap-3">
