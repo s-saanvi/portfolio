@@ -1,42 +1,77 @@
 ---
-import Header from "../components/Header.astro";
-import Hero from "../components/Hero.astro";
-import About from "../components/About.astro";
-import Projects from "../components/Projects.astro";
-import Experience from "../components/Experience.astro";
-import Education from "../components/Education.astro";
-import Certifications from "../components/Certifications.astro";
-import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 import { siteConfig } from "../config";
-import "../styles/global.css";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={siteConfig.description} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
-    <title>{siteConfig.name} - {siteConfig.title}</title>
-  </head>
-  <body>
-    <Header />
-    <section>
-      <Hero />
-      <About />
-      <Projects />
-      <Experience />
-      <Education />
-      <Certifications />
-    </section>
-    <Footer />
-  </body>
-</html>
+<BaseLayout title="Home">
+  <div class="py-12 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+    <div class="space-y-8 animate-fade-in">
+      <div class="inline-block px-4 py-2 border-2 border-black font-bold uppercase text-sm tracking-wider" style={`background-color: ${siteConfig.accentColor}; color: white;`}>
+        Welcome to
+      </div>
+
+      <h1 class="text-5xl md:text-7xl font-bold tracking-tighter uppercase leading-[1.1]" style={`text-shadow: 4px 4px 0px ${siteConfig.accentColor};`}>
+        {siteConfig.name}
+      </h1>
+
+      <p class="text-lg md:text-xl font-medium border-l-4 border-black pl-4 py-2">
+        {siteConfig.description}
+      </p>
+
+      <div class="flex flex-wrap gap-4 pt-4">
+        <a href="/services" class="neo-button px-8 py-4 text-white text-lg" style={`background-color: ${siteConfig.accentColor}`}>
+          Our Services
+        </a>
+        <a href="/contact" class="neo-button px-8 py-4 bg-white text-black text-lg">
+          Get in Touch
+        </a>
+      </div>
+    </div>
+
+    <div class="relative animate-fade-in animation-delay-200">
+      <div class="absolute inset-0 bg-black translate-x-4 translate-y-4"></div>
+      <div class="neo-box p-8 relative z-10 aspect-square flex items-center justify-center bg-gray-50 overflow-hidden">
+        <!-- Abstract Neobrutalist Graphic -->
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+          <rect x="20" y="20" width="80" height="80" fill={siteConfig.accentColor} stroke="black" stroke-width="4"/>
+          <circle cx="140" cy="140" r="40" fill="white" stroke="black" stroke-width="4"/>
+          <path d="M 20 180 L 100 100" stroke="black" stroke-width="8" stroke-linecap="square"/>
+          <rect x="120" y="20" width="60" height="60" fill="black" />
+          <circle cx="60" cy="140" r="20" fill={siteConfig.accentColor} stroke="black" stroke-width="4"/>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+
+  <section class="mt-24">
+    <h2 class="text-4xl font-bold uppercase mb-12 border-b-4 border-black pb-4 inline-block" style={`border-bottom-color: ${siteConfig.accentColor}`}>
+      Latest Updates
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {siteConfig.blogPosts.slice(0, 2).map((post) => (
+        <a href={post.link} class="neo-box p-8 block group">
+          <div class="text-sm font-bold border-2 border-black inline-block px-2 py-1 mb-4">{post.date}</div>
+          <h3 class="text-2xl font-bold uppercase mb-4 group-hover:underline decoration-4 underline-offset-4" style={`text-decoration-color: ${siteConfig.accentColor}`}>{post.title}</h3>
+          <p class="font-medium">{post.summary}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+    opacity: 0;
+  }
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+</style>

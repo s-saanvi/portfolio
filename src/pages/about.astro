@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../config";
+---
+
+<BaseLayout title="About Us">
+  <div class="py-12 md:py-24 max-w-4xl">
+    <div class="mb-12">
+      <h1 class="text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-6" style={`text-shadow: 4px 4px 0px ${siteConfig.accentColor};`}>
+        About Us
+      </h1>
+      <div class="w-24 h-4 bg-black"></div>
+    </div>
+
+    <div class="neo-box p-8 md:p-12 bg-white text-lg font-medium leading-relaxed mb-16">
+      <p set:html={siteConfig.aboutMe.replace(/\n/g, '<br/>')} />
+    </div>
+
+    <h2 class="text-4xl font-bold uppercase mb-8" style={`color: ${siteConfig.accentColor}; text-shadow: 2px 2px 0px black;`}>
+      Core Skills
+    </h2>
+
+    <div class="flex flex-wrap gap-4">
+      {siteConfig.skills.map((skill) => (
+        <div class="neo-box px-6 py-3 bg-gray-50 font-bold uppercase text-sm">
+          {skill}
+        </div>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
