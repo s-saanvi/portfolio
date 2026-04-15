@@ -1,5 +1,14 @@
 ---
 import { siteConfig } from "../config";
+
+const formattedAboutMe = siteConfig.aboutMe
+  .replace(/&/g, "&amp;")
+  .replace(/</g, "&lt;")
+  .replace(/>/g, "&gt;")
+  .replace(/"/g, "&quot;")
+  .replace(/'/g, "&#039;")
+  .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+  .replace(/\n/g, "<br />");
 ---
 
 <section id="about" class="p-8 sm:p-12 md:p-16 lg:p-24">
@@ -19,7 +28,10 @@ import { siteConfig } from "../config";
       </div>
 
       <div class="lg:col-span-8 space-y-8">
-        <p class="text-lg sm:text-xl md:text-2xl leading-relaxed text-gray-600" set:html={siteConfig.aboutMe.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br />')}>
+        <p
+          class="text-lg sm:text-xl md:text-2xl leading-relaxed text-gray-600"
+          set:html={formattedAboutMe}
+        >
         </p>
 
         <div class="pt-4">
