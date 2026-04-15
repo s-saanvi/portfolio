@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../config";
+---
+
+<BaseLayout title="Services">
+  <div class="py-12 md:py-24">
+    <div class="mb-16">
+      <h1 class="text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-6" style={`text-shadow: 4px 4px 0px ${siteConfig.accentColor};`}>
+        Our Services
+      </h1>
+      <p class="text-xl font-medium border-l-4 border-black pl-4 max-w-2xl">
+        We provide bold, robust, and scalable solutions tailored to make your brand stand out.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {siteConfig.services.map((service, index) => (
+        <div class="neo-box p-8 bg-white flex flex-col h-full group relative overflow-hidden">
+          <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
+             <span class="text-6xl font-black" style={`color: ${siteConfig.accentColor}`}>0{index + 1}</span>
+          </div>
+
+          <h3 class="text-2xl font-bold uppercase mb-4 relative z-10">{service.name}</h3>
+          <p class="font-medium text-gray-700 flex-grow relative z-10">{service.description}</p>
+
+          <div class="mt-8 relative z-10">
+             <a href="/contact" class="inline-block font-bold uppercase border-b-4 border-black hover:pb-1 transition-all" style={`border-bottom-color: ${siteConfig.accentColor}`}>
+               Let's Talk &rarr;
+             </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
