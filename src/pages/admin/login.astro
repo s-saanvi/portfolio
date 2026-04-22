@@ -1,6 +1,26 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { siteConfig } from "../../config";
+
+let errorMessage = "";
+
+if (Astro.request.method === "POST") {
+  const data = await Astro.request.formData();
+  const username = data.get("username")?.toString() || "";
+  const password = data.get("password")?.toString() || "";
+
+  if (username === import.meta.env.ADMIN_USERNAME && password === import.meta.env.ADMIN_PASSWORD) {
+    Astro.cookies.set("admin_session", "true", {
+      path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax",
+    });
+    return Astro.redirect(import.meta.env.BASE_URL + "admin/write");
+  } else {
+    errorMessage = "Invalid credentials. Try again.";
+  }
+}
 ---
 
 <BaseLayout title="Admin Login">
@@ -14,10 +34,12 @@ import { siteConfig } from "../../config";
       </p>
     </div>
 
-    <form id="login-form" class="neo-box p-8 md:p-12 bg-white space-y-6">
-      <div id="error-message" class="hidden bg-red-500 text-white font-bold p-4 border-3 border-black mb-4">
-        Invalid credentials. Try again.
-      </div>
+    <form id="login-form" method="POST" class="neo-box p-8 md:p-12 bg-white space-y-6">
+      {errorMessage && (
+        <div id="error-message" class="bg-red-500 text-white font-bold p-4 border-3 border-black mb-4">
+          {errorMessage}
+        </div>
+      )}
 
       <div class="space-y-2">
         <label for="username" class="block font-bold uppercase text-sm">Username</label>
@@ -53,23 +75,3 @@ import { siteConfig } from "../../config";
   </div>
 </BaseLayout>
 
-<script>
-  const loginForm = document.getElementById('login-form');
-  const errorMessage = document.getElementById('error-message');
-
-  loginForm?.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const usernameInput = document.getElementById('username') as HTMLInputElement;
-    const passwordInput = document.getElementById('password') as HTMLInputElement;
-
-    if (usernameInput.value === 'admin' && passwordInput.value === 'password') {
-      // Mock successful login
-      errorMessage?.classList.add('hidden');
-      window.location.href = import.meta.env.BASE_URL + 'admin/write';
-    } else {
-      // Show error
-      errorMessage?.classList.remove('hidden');
-    }
-  });
-</script>

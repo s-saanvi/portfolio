@@ -1,6 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { siteConfig } from "../../config";
+
+if (!Astro.cookies.has("admin_session")) {
+  return Astro.redirect(import.meta.env.BASE_URL + "admin/login");
+}
 ---
 
 <BaseLayout title="Write Post">
