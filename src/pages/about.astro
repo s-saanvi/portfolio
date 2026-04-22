@@ -1,6 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { siteConfig } from "../config";
+
+const escapeHtml = (unsafe: string) => {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};
+
+const BOLD_REGEX = /\*\*(.*?)\*\*/g;
+const NEWLINE_REGEX = /\n/g;
+
+const safeAboutMe = escapeHtml(siteConfig.aboutMe)
+  .replace(NEWLINE_REGEX, '<br/>')
+  .replace(BOLD_REGEX, (_, p1) => `<strong>${p1}</strong>`);
 ---
 
 <BaseLayout title="About Us">
@@ -13,7 +29,7 @@ import { siteConfig } from "../config";
     </div>
 
     <div class="neo-box p-8 md:p-12 bg-white text-lg font-medium leading-relaxed mb-16">
-      <p set:html={siteConfig.aboutMe.replace(/\n/g, '<br/>')} />
+      <p set:html={safeAboutMe} />
     </div>
 
     <h2 class="text-4xl font-bold uppercase mb-8" style={`color: ${siteConfig.accentColor}; text-shadow: 2px 2px 0px black;`}>
