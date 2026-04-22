@@ -44,3 +44,10 @@ export const siteConfig = {
     }
   ]
 };
+
+export const socials = [
+  { name: "Twitter / X", url: siteConfig.social.twitter, color: "#000000" },
+  { name: "LinkedIn", url: siteConfig.social.linkedin, color: "#0A66C2" },
+  { name: "GitHub", url: siteConfig.social.github, color: "#181717" },
+  { name: "Google Dev", url: siteConfig.social.gdev, color: "#4285F4" }
+].filter(s => s.url);
