@@ -59,3 +59,16 @@ export const socials = [
   { name: "GitHub", url: siteConfig.social.github, color: "#181717" },
   { name: "Google Dev", url: siteConfig.social.gdev, color: "#4285F4" }
 ].filter(s => s.url);
+
+const escapeHtml = (unsafe: string) => {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};
+
+export const safeAboutMe = escapeHtml(siteConfig.aboutMe)
+  .replace(/\n/g, '<br/>')
+  .replace(/\*\*(.*?)\*\*/g, (_, p1) => `<strong>${p1}</strong>`);
