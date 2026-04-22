@@ -12,10 +12,9 @@ import { siteConfig } from "../config";
     <div class="neo-box p-6 bg-white">
       <h3 class="text-xl font-bold uppercase mb-4">Quick Links</h3>
       <ul class="space-y-2 font-bold text-sm uppercase">
-        <li><a href="/about" class="hover:underline">About</a></li>
-        <li><a href="/services" class="hover:underline">Services</a></li>
-        <li><a href="/blog" class="hover:underline">Blog</a></li>
-        <li><a href="/contact" class="hover:underline">Contact</a></li>
+        {siteConfig.navLinks.filter(link => ['About', 'Services', 'Blog', 'Contact'].includes(link.name)).map((link) => (
+          <li><a href={link.href} class="hover:underline">{link.name}</a></li>
+        ))}
       </ul>
     </div>
 

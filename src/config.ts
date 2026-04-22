@@ -3,6 +3,14 @@ export const siteConfig = {
   title: "Creative Tech Solutions",
   description: "CodingCup Labs builds next-generation digital experiences.",
   accentColor: "#ff6600",
+  navLinks: [
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Services", href: "/services" },
+    { name: "Blog", href: "/blog" },
+    { name: "Socials", href: "/socials" },
+    { name: "Contact", href: "/contact" },
+  ],
   social: {
     email: "hello@codingcuplabs.com",
     linkedin: "https://linkedin.com/company/codingcuplabs",
