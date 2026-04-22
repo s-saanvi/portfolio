@@ -2,7 +2,8 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { siteConfig } from "../../config";
 
-if (!Astro.cookies.has("admin_session")) {
+const authCookie = Astro.cookies.get("admin-auth");
+if (!authCookie || authCookie.value !== "true") {
   return Astro.redirect(import.meta.env.BASE_URL + "admin/login");
 }
 ---

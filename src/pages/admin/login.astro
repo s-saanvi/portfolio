@@ -75,3 +75,39 @@ if (Astro.request.method === "POST") {
   </div>
 </BaseLayout>
 
+<script>
+  const loginForm = document.getElementById('login-form');
+  const errorMessage = document.getElementById('error-message');
+
+  loginForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const usernameInput = document.getElementById('username') as HTMLInputElement;
+    const passwordInput = document.getElementById('password') as HTMLInputElement;
+
+    try {
+      const response = await fetch(import.meta.env.BASE_URL + 'api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: usernameInput.value,
+          password: passwordInput.value,
+        }),
+      });
+
+      if (response.ok) {
+        // Successful login
+        errorMessage?.classList.add('hidden');
+        window.location.href = import.meta.env.BASE_URL + 'admin/write';
+      } else {
+        // Show error
+        errorMessage?.classList.remove('hidden');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      errorMessage?.classList.remove('hidden');
+    }
+  });
+</script>
