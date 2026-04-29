@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { siteConfig } from "../../config";
+import { createSessionToken } from "../../utils/auth";
 
 let errorMessage = "";
 
@@ -10,7 +11,9 @@ if (Astro.request.method === "POST") {
   const password = data.get("password")?.toString() || "";
 
   if (username === import.meta.env.ADMIN_USERNAME && password === import.meta.env.ADMIN_PASSWORD) {
-    Astro.cookies.set("admin_session", "true", {
+    const token = await createSessionToken(username);
+
+    Astro.cookies.set("admin-session", token, {
       path: "/",
       httpOnly: true,
       secure: true,
