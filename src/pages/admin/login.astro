@@ -105,8 +105,7 @@ if (Astro.request.method === "POST") {
         // Show error
         errorMessage?.classList.remove('hidden');
       }
-    } catch (error) {
-      console.error('Login error:', error);
+    } catch {
       errorMessage?.classList.remove('hidden');
     }
   });
