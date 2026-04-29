@@ -1,7 +1,17 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Blog Post Writing Form', () => {
-  test('should fill out form, mock publish post and redirect to blog', async ({ page }) => {
+  test('should fill out form, mock publish post and redirect to blog', async ({ page, context }) => {
+    // Inject the authentication cookie to bypass login redirection
+    await context.addCookies([
+      {
+        name: 'admin-auth',
+        value: 'true',
+        domain: 'localhost',
+        path: '/',
+      }
+    ]);
+
     // Navigate to the write form page
     await page.goto('/admin/write');
 
