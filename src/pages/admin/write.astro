@@ -1,9 +1,19 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { siteConfig } from "../../config";
+import { verifySessionToken } from "../../utils/auth";
 
-const authCookie = Astro.cookies.get("admin-auth");
-if (!authCookie || authCookie.value !== "true") {
+const sessionCookie = Astro.cookies.get("admin-session");
+let isAuthenticated = false;
+
+if (sessionCookie && sessionCookie.value) {
+  const session = await verifySessionToken(sessionCookie.value);
+  if (session) {
+    isAuthenticated = true;
+  }
+}
+
+if (!isAuthenticated) {
   return Astro.redirect(import.meta.env.BASE_URL + "admin/login");
 }
 ---
