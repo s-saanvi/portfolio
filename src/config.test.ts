@@ -63,7 +63,7 @@ describe('socials', () => {
     });
   });
 
-  it('should filter out social links without a url', () => {
+  it('should not contain social links without a url', () => {
     socials.forEach((social) => {
       expect(social.url).toBeTruthy();
     });
