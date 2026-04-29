@@ -4,7 +4,7 @@ import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://s-saanvi.github.io',
+  site: 'https://gaurav-g-alva.github.io',
   base: '/',
   output: 'server',
   adapter: node({
