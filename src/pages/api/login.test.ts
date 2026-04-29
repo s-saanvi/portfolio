@@ -1,55 +1,80 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { POST } from './login';
+import type { APIContext } from 'astro';
 
-describe('Login API', () => {
-  it('should return 200 for valid credentials', async () => {
-    const request = new Request('http://localhost/api/login', {
+describe('POST /api/login', () => {
+  it('should return 200 on valid credentials', async () => {
+    const mockRequest = new Request('http://localhost/api/login', {
       method: 'POST',
-      body: JSON.stringify({ username: 'admin', password: 'password' }),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: 'admin',
+        password: 'password',
+      }),
     });
 
-    // @ts-ignore - Mocking APIContext, only need request
-    const response = await POST({ request });
+    // Provide minimal mock for APIContext if required
+    const mockContext = {
+      request: mockRequest,
+    } as APIContext;
+
+    const response = await POST(mockContext);
+
+    expect(response).toBeInstanceOf(Response);
     expect(response.status).toBe(200);
+    expect(response.headers.get('Content-Type')).toBe('application/json');
 
     const data = await response.json();
     expect(data.success).toBe(true);
   });
 
-  it('should return 401 for invalid credentials', async () => {
-    const request = new Request('http://localhost/api/login', {
+  it('should return 401 on invalid credentials', async () => {
+    const mockRequest = new Request('http://localhost/api/login', {
       method: 'POST',
-      body: JSON.stringify({ username: 'wrong', password: 'password' }),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: 'wrong',
+        password: 'wrong',
+      }),
     });
 
-    // @ts-ignore
-    const response = await POST({ request });
+    const mockContext = {
+      request: mockRequest,
+    } as APIContext;
+
+    const response = await POST(mockContext);
+
+    expect(response).toBeInstanceOf(Response);
     expect(response.status).toBe(401);
+    expect(response.headers.get('Content-Type')).toBe('application/json');
 
     const data = await response.json();
     expect(data.success).toBe(false);
     expect(data.message).toBe('Invalid credentials');
   });
 
-  it('should return 400 for malformed JSON request body', async () => {
-    // Intentionally pass an invalid JSON string to trigger the catch block in the API
-    const request = new Request('http://localhost/api/login', {
+  it('should return 400 on bad request (e.g. invalid JSON)', async () => {
+    const mockRequest = new Request('http://localhost/api/login', {
       method: 'POST',
-      body: '{ this-is-not-valid-json }',
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
+      body: 'invalid-json',
     });
 
-    // @ts-ignore
-    const response = await POST({ request });
+    const mockContext = {
+      request: mockRequest,
+    } as APIContext;
+
+    const response = await POST(mockContext);
+
+    expect(response).toBeInstanceOf(Response);
     expect(response.status).toBe(400);
+    expect(response.headers.get('Content-Type')).toBe('application/json');
 
     const data = await response.json();
     expect(data.success).toBe(false);

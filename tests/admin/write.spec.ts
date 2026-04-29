@@ -1,19 +1,19 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Blog Post Writing Form', () => {
-  test('should fill out form, mock publish post and redirect to blog', async ({ page }) => {
-    // Navigate to the login page first
-    await page.goto('/admin/login');
+  test('should fill out form, mock publish post and redirect to blog', async ({ page, context }) => {
+    // Inject the authentication cookie to bypass login redirection
+    await context.addCookies([
+      {
+        name: 'admin-auth',
+        value: 'true',
+        domain: 'localhost',
+        path: '/',
+      }
+    ]);
 
-    // Perform login to set the session token
-    await page.waitForSelector('#login-form');
-    await page.fill('#username', process.env.ADMIN_USERNAME || 'admin');
-    await page.fill('#password', process.env.ADMIN_PASSWORD || 'password');
-    await page.click('button[type="submit"]');
-
-    // We can also just set the cookie manually to bypass login if env vars are tricky
-    // But let's try actual login first if the test env supports it
-    // Wait for the form to be visible
+    // Navigate to the write form page
+    await page.goto('/admin/write');
 
     // Wait for the form to be visible
     await page.waitForSelector('#write-form');
