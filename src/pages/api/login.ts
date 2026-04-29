@@ -1,17 +1,23 @@
 import type { APIRoute } from 'astro';
+import { createSessionToken } from '../../utils/auth';
 
 export const POST: APIRoute = async ({ request }) => {
   try {
     const data = await request.json();
     const { username, password } = data;
 
-    // In a real application, this would be validated against a database
-    // and use secure hashing for passwords.
-    if (username === 'admin' && password === 'password') {
+    // Use environment variables for secure authentication
+    if (
+      username === import.meta.env.ADMIN_USERNAME &&
+      password === import.meta.env.ADMIN_PASSWORD
+    ) {
+      const token = await createSessionToken(username);
+
       return new Response(JSON.stringify({ success: true }), {
         status: 200,
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Set-Cookie': `admin-session=${token}; Path=/; HttpOnly; Secure; SameSite=Lax`
         }
       });
     }
