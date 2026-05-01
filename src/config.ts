@@ -36,20 +36,6 @@ export const siteConfig = {
       name: "Custom Software",
       description: "Scalable software solutions to meet your unique business needs."
     }
-  ],
-  blogPosts: [
-    {
-      title: "Embracing Neobrutalism in Web Design",
-      date: "Oct 24, 2025",
-      summary: "Why flat is out and bold is in. A look at the rising trend of neobrutalist UI.",
-      link: "#"
-    },
-    {
-      title: "Optimizing Astro for Lightning Fast Sites",
-      date: "Sep 15, 2025",
-      summary: "How we leverage Astro's island architecture to ship zero JavaScript by default.",
-      link: "#"
-    }
   ]
 };
 
