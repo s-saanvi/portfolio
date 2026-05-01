@@ -60,6 +60,9 @@ export const socials = [
   { name: "Google Dev", url: siteConfig.social.gdev, color: "#4285F4" }
 ].filter(s => s.url);
 
+const QUICK_LINK_NAMES = new Set(['About', 'Services', 'Blog', 'Contact']);
+export const footerLinks = siteConfig.navLinks.filter(link => QUICK_LINK_NAMES.has(link.name));
+
 const escapeHtml = (unsafe: string) => {
   return unsafe
     .replace(/&/g, "&amp;")
