@@ -10,12 +10,17 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.9",
     "@astrojs/node": "^9.0.2",
     "@tailwindcss/vite": "^4.1.11",
     "astro": "^5.12.3",
-    "tailwindcss": "^4.1.11"
+    "jose": "^6.2.3",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.59.1"
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.0",
+    "vitest": "^4.1.5"
   }
 }

@@ -58,7 +58,7 @@ export const socials = [
   { name: "LinkedIn", url: siteConfig.social.linkedin, color: "#0A66C2" },
   { name: "GitHub", url: siteConfig.social.github, color: "#181717" },
   { name: "Google Dev", url: siteConfig.social.gdev, color: "#4285F4" }
-].filter(s => s.url);
+];
 
 const QUICK_LINK_NAMES = new Set(['About', 'Services', 'Blog', 'Contact']);
 export const footerLinks = siteConfig.navLinks.filter(link => QUICK_LINK_NAMES.has(link.name));

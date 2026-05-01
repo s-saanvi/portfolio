@@ -2,10 +2,13 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Blog Post Writing Form', () => {
   test('should fill out form, mock publish post and redirect to blog', async ({ page }) => {
-    // Navigate to the write form page
-    await page.goto('/admin/write');
+    // Log in via UI
+    await page.goto('/admin/login');
+    await page.fill('#username', process.env.ADMIN_USERNAME || 'admin');
+    await page.fill('#password', process.env.ADMIN_PASSWORD || 'password');
+    await page.click('button[type="submit"]');
 
-    // Wait for the form to be visible
+    // Wait for the write form to be visible (indicates successful login and redirect)
     await page.waitForSelector('#write-form');
 
     // Fill in the post title
