@@ -4,6 +4,10 @@ import type { APIContext } from 'astro';
 
 describe('POST /api/login', () => {
   it('should return 200 on valid credentials', async () => {
+    // Inject the expected environment variables for the test
+    vi.stubEnv('ADMIN_USERNAME', 'admin');
+    vi.stubEnv('ADMIN_PASSWORD', 'password');
+
     const mockRequest = new Request('http://localhost/api/login', {
       method: 'POST',
       headers: {
