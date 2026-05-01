@@ -1,6 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { siteConfig } from "../config";
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+// Sort posts by date descending
+allPosts.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf());
 ---
 
 <BaseLayout title="Blog">
@@ -18,24 +23,27 @@ import { siteConfig } from "../config";
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-      {siteConfig.blogPosts.map((post) => (
-        <article class="neo-box bg-white flex flex-col group">
+      {allPosts.map((post) => (
+        <article class="neo-box bg-white flex flex-col group relative">
           <div class="h-48 border-b-3 border-black bg-gray-100 flex items-center justify-center relative overflow-hidden">
-             <!-- Placeholder Image Pattern -->
-             <div class="absolute inset-0 opacity-20" style={`background-image: radial-gradient(${siteConfig.accentColor} 2px, transparent 2px); background-size: 16px 16px;`}></div>
-             <span class="text-4xl font-black opacity-30 group-hover:scale-110 transition-transform">POST</span>
+             {post.data.image ? (
+               <img src={`${import.meta.env.BASE_URL}${post.data.image.replace(/^\//, '')}`} alt={post.data.title} class="w-full h-full object-cover" />
+             ) : (
+               <div class="absolute inset-0 opacity-20" style={`background-image: radial-gradient(${siteConfig.accentColor} 2px, transparent 2px); background-size: 16px 16px;`}></div>
+             )}
+             {!post.data.image && <span class="text-4xl font-black opacity-30 group-hover:scale-110 transition-transform">POST</span>}
           </div>
           <div class="p-8 flex flex-col flex-grow">
             <div class="text-sm font-bold border-2 border-black inline-block px-2 py-1 mb-4 self-start bg-yellow-300">
-              {post.date}
+              {new Date(post.data.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
             </div>
             <h2 class="text-3xl font-bold uppercase mb-4 leading-tight group-hover:text-gray-700 transition-colors">
-              <a href={`${import.meta.env.BASE_URL}${post.link.replace(/^\//, '')}`} class="before:absolute before:inset-0">
-                {post.title}
+              <a href={`${import.meta.env.BASE_URL}blog/${post.slug}`} class="before:absolute before:inset-0">
+                {post.data.title}
               </a>
             </h2>
             <p class="font-medium flex-grow text-gray-800">
-              {post.summary}
+              {post.data.summary}
             </p>
             <div class="mt-8">
               <span class="font-bold uppercase tracking-wider text-sm border-b-2 border-black pb-1">Read More</span>

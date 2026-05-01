@@ -1,0 +1,99 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { siteConfig } from "../../config";
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<BaseLayout title={entry.data.title}>
+  <article class="py-12 md:py-24 max-w-4xl mx-auto">
+    <div class="mb-12">
+      <a href={`${import.meta.env.BASE_URL}blog`} class="inline-flex items-center font-bold uppercase hover:underline mb-8">
+        ← Back to Blog
+      </a>
+      <div class="text-sm font-bold border-2 border-black inline-block px-2 py-1 mb-6 bg-yellow-300">
+        {new Date(entry.data.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </div>
+      <h1 class="text-5xl md:text-6xl font-bold tracking-tighter uppercase mb-6 leading-tight" style={`text-shadow: 3px 3px 0px ${siteConfig.accentColor};`}>
+        {entry.data.title}
+      </h1>
+      <p class="text-xl font-medium border-l-4 border-black pl-4 py-2 italic text-gray-700">
+        {entry.data.summary}
+      </p>
+    </div>
+
+    {entry.data.image && (
+      <div class="neo-box border-4 border-black mb-12 h-64 md:h-96 w-full overflow-hidden">
+        <img src={`${import.meta.env.BASE_URL}${entry.data.image.replace(/^\//, '')}`} alt={entry.data.title} class="w-full h-full object-cover" />
+      </div>
+    )}
+
+    <div class="prose prose-lg prose-headings:font-bold prose-headings:uppercase prose-a:font-bold prose-a:text-blue-600 hover:prose-a:text-blue-800 prose-img:border-4 prose-img:border-black max-w-none neo-content">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style is:global>
+  /* Basic styling for markdown content to match neobrutalism theme */
+  .neo-content h1, .neo-content h2, .neo-content h3 {
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    line-height: 1.2;
+  }
+  .neo-content h2 {
+    font-size: 2.25rem;
+    border-bottom: 4px solid black;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+  }
+  .neo-content p {
+    margin-bottom: 1.5em;
+    font-weight: 500;
+  }
+  .neo-content ul, .neo-content ol {
+    margin-bottom: 1.5em;
+    padding-left: 1.5em;
+    font-weight: 500;
+  }
+  .neo-content li {
+    margin-bottom: 0.5em;
+  }
+  .neo-content blockquote {
+    border-left: 4px solid black;
+    padding-left: 1rem;
+    font-style: italic;
+    background-color: #f3f4f6;
+    padding: 1rem;
+    margin-left: 0;
+  }
+  .neo-content code {
+    background-color: #e5e7eb;
+    padding: 0.2rem 0.4rem;
+    font-weight: bold;
+    border: 2px solid black;
+  }
+  .neo-content pre {
+    background-color: #111827;
+    color: white;
+    padding: 1.5rem;
+    border: 4px solid black;
+    overflow-x: auto;
+  }
+  .neo-content pre code {
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+    border: none;
+    font-weight: normal;
+  }
+</style>

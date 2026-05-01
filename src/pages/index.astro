@@ -1,6 +1,10 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { siteConfig } from "../config";
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+allPosts.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf());
 ---
 
 <BaseLayout title="Home">
@@ -51,11 +55,13 @@ import { siteConfig } from "../config";
     </h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {siteConfig.blogPosts.slice(0, 2).map((post) => (
-        <a href={`${import.meta.env.BASE_URL}${post.link.replace(/^\//, '')}`} class="neo-box p-8 block group">
-          <div class="text-sm font-bold border-2 border-black inline-block px-2 py-1 mb-4">{post.date}</div>
-          <h3 class="text-2xl font-bold uppercase mb-4 group-hover:underline decoration-4 underline-offset-4" style={`text-decoration-color: ${siteConfig.accentColor}`}>{post.title}</h3>
-          <p class="font-medium">{post.summary}</p>
+      {allPosts.slice(0, 2).map((post) => (
+        <a href={`${import.meta.env.BASE_URL}blog/${post.slug}`} class="neo-box p-8 block group">
+          <div class="text-sm font-bold border-2 border-black inline-block px-2 py-1 mb-4">
+            {new Date(post.data.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+          </div>
+          <h3 class="text-2xl font-bold uppercase mb-4 group-hover:underline decoration-4 underline-offset-4" style={`text-decoration-color: ${siteConfig.accentColor}`}>{post.data.title}</h3>
+          <p class="font-medium">{post.data.summary}</p>
         </a>
       ))}
     </div>

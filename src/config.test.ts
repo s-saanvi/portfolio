@@ -41,16 +41,6 @@ describe('siteConfig', () => {
       expect(typeof service.description).toBe('string');
     });
   });
-
-  it('should have a valid blogPosts array', () => {
-    expect(Array.isArray(siteConfig.blogPosts)).toBe(true);
-    siteConfig.blogPosts.forEach((post) => {
-      expect(typeof post.title).toBe('string');
-      expect(typeof post.date).toBe('string');
-      expect(typeof post.summary).toBe('string');
-      expect(typeof post.link).toBe('string');
-    });
-  });
 });
 
 describe('socials', () => {
