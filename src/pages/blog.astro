@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { siteConfig } from "../config";
 import { getCollection } from 'astro:content';
+import { formatDate } from "../utils/date";
 
 const allPosts = await getCollection('blog');
 // Sort posts by date descending
@@ -35,7 +36,7 @@ allPosts.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).
           </div>
           <div class="p-8 flex flex-col flex-grow">
             <div class="text-sm font-bold border-2 border-black inline-block px-2 py-1 mb-4 self-start bg-yellow-300">
-              {new Date(post.data.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+              {formatDate(post.data.date)}
             </div>
             <h2 class="text-3xl font-bold uppercase mb-4 leading-tight group-hover:text-gray-700 transition-colors">
               <a href={`${import.meta.env.BASE_URL}blog/${post.slug}`} class="before:absolute before:inset-0">
