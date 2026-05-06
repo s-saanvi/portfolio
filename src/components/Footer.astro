@@ -21,9 +21,9 @@ import { siteConfig, footerLinks } from "../config";
     <div class="neo-box p-6" style={`background-color: ${siteConfig.accentColor}; color: white;`}>
       <h3 class="text-xl font-bold uppercase mb-4 text-white">Find Us</h3>
       <div class="flex gap-4">
-        {siteConfig.social.twitter && <a href={siteConfig.social.twitter} class="neo-button px-3 py-1 bg-white text-black" target="_blank">TW</a>}
-        {siteConfig.social.github && <a href={siteConfig.social.github} class="neo-button px-3 py-1 bg-white text-black" target="_blank">GH</a>}
-        {siteConfig.social.linkedin && <a href={siteConfig.social.linkedin} class="neo-button px-3 py-1 bg-white text-black" target="_blank">IN</a>}
+        {siteConfig.social.twitter && <a href={siteConfig.social.twitter} class="neo-button px-3 py-1 bg-white text-black" target="_blank" rel="noopener noreferrer">TW</a>}
+        {siteConfig.social.github && <a href={siteConfig.social.github} class="neo-button px-3 py-1 bg-white text-black" target="_blank" rel="noopener noreferrer">GH</a>}
+        {siteConfig.social.linkedin && <a href={siteConfig.social.linkedin} class="neo-button px-3 py-1 bg-white text-black" target="_blank" rel="noopener noreferrer">IN</a>}
       </div>
       <p class="mt-4 font-bold text-sm break-all">{siteConfig.social.email}</p>
     </div>
