@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { siteConfig, socials } from './config';
+import { siteConfig, socials, footerLinks } from './config';
 
 describe('siteConfig', () => {
   it('should have required string properties', () => {
@@ -39,6 +39,31 @@ describe('siteConfig', () => {
     siteConfig.services.forEach((service) => {
       expect(typeof service.name).toBe('string');
       expect(typeof service.description).toBe('string');
+    });
+  });
+});
+
+describe('footerLinks', () => {
+  it('should only contain the specified quick links', () => {
+    const expectedNames = ['About', 'Services', 'Blog', 'Contact'];
+    expect(footerLinks.length).toBe(expectedNames.length);
+
+    footerLinks.forEach(link => {
+      expect(expectedNames).toContain(link.name);
+    });
+  });
+
+  it('should not contain "Home" or "Socials"', () => {
+    const names = footerLinks.map(link => link.name);
+    expect(names).not.toContain('Home');
+    expect(names).not.toContain('Socials');
+  });
+
+  it('should match the link structure of navLinks', () => {
+    footerLinks.forEach(link => {
+      expect(typeof link.name).toBe('string');
+      expect(typeof link.href).toBe('string');
+      expect(link.href.startsWith('/')).toBe(true);
     });
   });
 });
