@@ -4,9 +4,9 @@ import { siteConfig } from "../config";
 import { getCollection } from 'astro:content';
 import { formatDate } from "../utils/date";
 
-const allPosts = await getCollection('blog');
-// Sort posts by date descending
-allPosts.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf());
+const allPosts = (await getCollection('blog'))
+  .map(post => ({ ...post, dateValue: new Date(post.data.date).valueOf() }))
+  .sort((a, b) => b.dateValue - a.dateValue);
 ---
 
 <BaseLayout title="Blog">
