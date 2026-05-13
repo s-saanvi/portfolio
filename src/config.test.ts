@@ -1,5 +1,40 @@
 import { describe, it, expect } from 'vitest';
-import { siteConfig, socials } from './config';
+import { siteConfig, socials, formatAboutMe } from './config';
+
+describe('formatAboutMe', () => {
+  it('should escape HTML tags', () => {
+    const input = '<div> & "test" \'</div>';
+    const output = formatAboutMe(input);
+    expect(output).toContain('&lt;div&gt;');
+    expect(output).toContain('&amp;');
+    expect(output).toContain('&quot;test&quot;');
+    expect(output).toContain('&#039;');
+  });
+
+  it('should replace newlines with <br/>', () => {
+    const input = 'line 1\nline 2';
+    const output = formatAboutMe(input);
+    expect(output).toBe('line 1<br/>line 2');
+  });
+
+  it('should format bold text with <strong> tags', () => {
+    const input = 'This is **bold** text';
+    const output = formatAboutMe(input);
+    expect(output).toBe('This is <strong>bold</strong> text');
+  });
+
+  it('should handle combined formatting and escaping', () => {
+    const input = 'Check out **this** <div>\nnext line';
+    const output = formatAboutMe(input);
+    expect(output).toBe('Check out <strong>this</strong> &lt;div&gt;<br/>next line');
+  });
+
+  it('should handle multiple bold blocks', () => {
+    const input = 'I am **strong** and **bold**.';
+    const output = formatAboutMe(input);
+    expect(output).toBe('I am <strong>strong</strong> and <strong>bold</strong>.');
+  });
+});
 
 describe('siteConfig', () => {
   it('should have required string properties', () => {

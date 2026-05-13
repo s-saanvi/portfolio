@@ -69,6 +69,10 @@ const escapeHtml = (unsafe: string) => {
     .replace(/'/g, "&#039;");
 };
 
-export const safeAboutMe = escapeHtml(siteConfig.aboutMe)
-  .replace(/\n/g, '<br/>')
-  .replace(/\*\*(.*?)\*\*/g, (_, p1) => `<strong>${p1}</strong>`);
+export const formatAboutMe = (text: string) => {
+  return escapeHtml(text)
+    .replace(/\n/g, "<br/>")
+    .replace(/\*\*(.*?)\*\*/g, (_, p1) => `<strong>${p1}</strong>`);
+};
+
+export const safeAboutMe = formatAboutMe(siteConfig.aboutMe);
