@@ -23,4 +23,12 @@ describe('formatDate', () => {
     const date = new Date(2024, 5, 20); // June 20, 2024 (month is 0-indexed)
     expect(formatDate(date, 'long')).toBe('June 20, 2024');
   });
+
+  it('should return "Invalid Date" for an invalid date string', () => {
+    expect(formatDate('not-a-date')).toBe('Invalid Date');
+  });
+
+  it('should return "Invalid Date" for an invalid Date object', () => {
+    expect(formatDate(new Date('invalid'))).toBe('Invalid Date');
+  });
 });
