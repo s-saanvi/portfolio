@@ -1,0 +1,5 @@
+
+> devportfolio@0.0.1 build
+> astro build
+
+sh: 1: astro: not found
