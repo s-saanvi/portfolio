@@ -36,20 +36,6 @@ export const siteConfig = {
       name: "Custom Software",
       description: "Scalable software solutions to meet your unique business needs."
     }
-  ],
-  blogPosts: [
-    {
-      title: "Embracing Neobrutalism in Web Design",
-      date: "Oct 24, 2025",
-      summary: "Why flat is out and bold is in. A look at the rising trend of neobrutalist UI.",
-      link: "#"
-    },
-    {
-      title: "Optimizing Astro for Lightning Fast Sites",
-      date: "Sep 15, 2025",
-      summary: "How we leverage Astro's island architecture to ship zero JavaScript by default.",
-      link: "#"
-    }
   ]
 };
 
@@ -58,7 +44,10 @@ export const socials = [
   { name: "LinkedIn", url: siteConfig.social.linkedin, color: "#0A66C2" },
   { name: "GitHub", url: siteConfig.social.github, color: "#181717" },
   { name: "Google Dev", url: siteConfig.social.gdev, color: "#4285F4" }
-].filter(s => s.url);
+];
+
+const QUICK_LINK_NAMES = new Set(['About', 'Services', 'Blog', 'Contact']);
+export const footerLinks = siteConfig.navLinks.filter(link => QUICK_LINK_NAMES.has(link.name));
 
 const escapeHtml = (unsafe: string) => {
   return unsafe

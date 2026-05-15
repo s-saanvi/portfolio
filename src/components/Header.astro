@@ -7,7 +7,7 @@ import { siteConfig } from "../config";
   class="fixed top-0 left-0 right-0 z-50 border-b-4 border-black bg-white transition-all duration-300 shadow-[0px_4px_0px_0px_rgba(0,0,0,1)]"
 >
   <nav class="max-w-7xl mx-auto px-4 sm:px-8 py-4 flex justify-between items-center">
-    <a href="/" class="text-2xl font-bold tracking-tighter" style={`color: ${siteConfig.accentColor}; text-shadow: 2px 2px 0px black;`}>
+    <a href={import.meta.env.BASE_URL} class="text-2xl font-bold tracking-tighter" style={`color: ${siteConfig.accentColor}; text-shadow: 2px 2px 0px black;`}>
       {siteConfig.name}
     </a>
 
@@ -21,7 +21,7 @@ import { siteConfig } from "../config";
       {siteConfig.navLinks.map((link) => (
         <li>
           <a
-            href={link.href}
+            href={`${import.meta.env.BASE_URL}${link.href.replace(/^\//, '')}`}
             class={link.name === 'Contact'
               ? "neo-button px-6 py-2 text-white"
               : "hover:underline decoration-4 underline-offset-4"}
@@ -42,7 +42,7 @@ import { siteConfig } from "../config";
       {siteConfig.navLinks.map((link) => (
         <li class={link.name !== 'Contact' ? "border-b-2 border-black" : ""}>
           <a
-            href={link.href}
+            href={`${import.meta.env.BASE_URL}${link.href.replace(/^\//, '')}`}
             class={link.name === 'Contact'
               ? "block py-4 text-white"
               : "block py-4 hover:bg-gray-100"}

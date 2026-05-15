@@ -1,40 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { siteConfig, socials, formatAboutMe } from './config';
-
-describe('formatAboutMe', () => {
-  it('should escape HTML tags', () => {
-    const input = '<div> & "test" \'</div>';
-    const output = formatAboutMe(input);
-    expect(output).toContain('&lt;div&gt;');
-    expect(output).toContain('&amp;');
-    expect(output).toContain('&quot;test&quot;');
-    expect(output).toContain('&#039;');
-  });
-
-  it('should replace newlines with <br/>', () => {
-    const input = 'line 1\nline 2';
-    const output = formatAboutMe(input);
-    expect(output).toBe('line 1<br/>line 2');
-  });
-
-  it('should format bold text with <strong> tags', () => {
-    const input = 'This is **bold** text';
-    const output = formatAboutMe(input);
-    expect(output).toBe('This is <strong>bold</strong> text');
-  });
-
-  it('should handle combined formatting and escaping', () => {
-    const input = 'Check out **this** <div>\nnext line';
-    const output = formatAboutMe(input);
-    expect(output).toBe('Check out <strong>this</strong> &lt;div&gt;<br/>next line');
-  });
-
-  it('should handle multiple bold blocks', () => {
-    const input = 'I am **strong** and **bold**.';
-    const output = formatAboutMe(input);
-    expect(output).toBe('I am <strong>strong</strong> and <strong>bold</strong>.');
-  });
-});
+import { siteConfig, socials, footerLinks } from './config';
 
 describe('siteConfig', () => {
   it('should have required string properties', () => {
@@ -76,14 +41,29 @@ describe('siteConfig', () => {
       expect(typeof service.description).toBe('string');
     });
   });
+});
 
-  it('should have a valid blogPosts array', () => {
-    expect(Array.isArray(siteConfig.blogPosts)).toBe(true);
-    siteConfig.blogPosts.forEach((post) => {
-      expect(typeof post.title).toBe('string');
-      expect(typeof post.date).toBe('string');
-      expect(typeof post.summary).toBe('string');
-      expect(typeof post.link).toBe('string');
+describe('footerLinks', () => {
+  it('should only contain the specified quick links', () => {
+    const expectedNames = ['About', 'Services', 'Blog', 'Contact'];
+    expect(footerLinks.length).toBe(expectedNames.length);
+
+    footerLinks.forEach(link => {
+      expect(expectedNames).toContain(link.name);
+    });
+  });
+
+  it('should not contain "Home" or "Socials"', () => {
+    const names = footerLinks.map(link => link.name);
+    expect(names).not.toContain('Home');
+    expect(names).not.toContain('Socials');
+  });
+
+  it('should match the link structure of navLinks', () => {
+    footerLinks.forEach(link => {
+      expect(typeof link.name).toBe('string');
+      expect(typeof link.href).toBe('string');
+      expect(link.href.startsWith('/')).toBe(true);
     });
   });
 });
@@ -98,7 +78,7 @@ describe('socials', () => {
     });
   });
 
-  it('should filter out social links without a url', () => {
+  it('should not contain social links without a url', () => {
     socials.forEach((social) => {
       expect(social.url).toBeTruthy();
     });

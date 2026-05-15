@@ -1,5 +1,5 @@
 ---
-import { siteConfig } from "../config";
+import { siteConfig, footerLinks } from "../config";
 ---
 
 <footer class="mt-24 border-t-4 border-black bg-white py-12">
@@ -12,7 +12,7 @@ import { siteConfig } from "../config";
     <div class="neo-box p-6 bg-white">
       <h3 class="text-xl font-bold uppercase mb-4">Quick Links</h3>
       <ul class="space-y-2 font-bold text-sm uppercase">
-        {siteConfig.navLinks.filter(link => ['About', 'Services', 'Blog', 'Contact'].includes(link.name)).map((link) => (
+        {footerLinks.map((link) => (
           <li><a href={link.href} class="hover:underline">{link.name}</a></li>
         ))}
       </ul>
@@ -21,9 +21,9 @@ import { siteConfig } from "../config";
     <div class="neo-box p-6" style={`background-color: ${siteConfig.accentColor}; color: white;`}>
       <h3 class="text-xl font-bold uppercase mb-4 text-white">Find Us</h3>
       <div class="flex gap-4">
-        {siteConfig.social.twitter && <a href={siteConfig.social.twitter} class="neo-button px-3 py-1 bg-white text-black" target="_blank">TW</a>}
-        {siteConfig.social.github && <a href={siteConfig.social.github} class="neo-button px-3 py-1 bg-white text-black" target="_blank">GH</a>}
-        {siteConfig.social.linkedin && <a href={siteConfig.social.linkedin} class="neo-button px-3 py-1 bg-white text-black" target="_blank">IN</a>}
+        {siteConfig.social.twitter && <a href={siteConfig.social.twitter} class="neo-button px-3 py-1 bg-white text-black" target="_blank" rel="noopener noreferrer">TW</a>}
+        {siteConfig.social.github && <a href={siteConfig.social.github} class="neo-button px-3 py-1 bg-white text-black" target="_blank" rel="noopener noreferrer">GH</a>}
+        {siteConfig.social.linkedin && <a href={siteConfig.social.linkedin} class="neo-button px-3 py-1 bg-white text-black" target="_blank" rel="noopener noreferrer">IN</a>}
       </div>
       <p class="mt-4 font-bold text-sm break-all">{siteConfig.social.email}</p>
     </div>

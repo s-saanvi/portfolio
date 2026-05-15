@@ -25,7 +25,7 @@ import { siteConfig } from "../config";
           <p class="font-medium text-gray-700 flex-grow relative z-10">{service.description}</p>
 
           <div class="mt-8 relative z-10">
-             <a href="/contact" class="inline-block font-bold uppercase border-b-4 border-black hover:pb-1 transition-all" style={`border-bottom-color: ${siteConfig.accentColor}`}>
+             <a href={`${import.meta.env.BASE_URL}contact`} class="inline-block font-bold uppercase border-b-4 border-black hover:pb-1 transition-all" style={`border-bottom-color: ${siteConfig.accentColor}`}>
                Let's Talk &rarr;
              </a>
           </div>
